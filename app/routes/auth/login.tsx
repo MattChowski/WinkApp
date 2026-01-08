@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import { useLoginMutation } from '~/apiHooks/useLoginMutation';
+import { WebSocketTest } from '~/components/WebSocketTest';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ export default function Login() {
           Login
         </button>
       </form>
+      <WebSocketTest />
     </div>
   );
 }
