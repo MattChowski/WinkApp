@@ -25,12 +25,18 @@ export function WebSocketTest() {
     });
 
     socket.on('connect_error', error => {
-      console.error('Socket.io error:', error);
+      console.error('Socket.io connect error:', error.message);
+      setStatus('disconnected');
     });
 
     socket.on('disconnect', () => {
       console.log('Socket.io disconnected');
       setStatus('disconnected');
+    });
+
+    // NestJS WsException errors come through this event
+    socket.on('exception', (error: { status: string; message: string }) => {
+      console.error('WsException:', error.message);
     });
 
     return () => {
@@ -55,11 +61,10 @@ export function WebSocketTest() {
       </div>
       <button
         onClick={sendMessage}
-        disabled={status !== 'connected'}
+        // disabled={status !== 'connected'}
         style={{
           marginTop: '10px',
           padding: '10px 20px',
-          cursor: status === 'connected' ? 'pointer' : 'not-allowed',
         }}>
         Send "bruh"
       </button>

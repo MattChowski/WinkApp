@@ -1,24 +1,29 @@
-import { useNavigate } from 'react-router';
-import { useLogoutMutation } from '~/apiHooks/useLogoutMutation';
-import { WebSocketTest } from '~/components/WebSocketTest';
+import { useNavigate } from "react-router";
+import { useLogoutMutation } from "~/apiHooks/useLogoutMutation";
+import Sidebar from "~/components/sidebar/Sidebar";
+import { WebSocketTest } from "~/components/WebSocketTest";
 
-export default function Dashboard() {
+const Dashboard = () => {
   const navigate = useNavigate();
   const { mutate: logout } = useLogoutMutation();
 
   const handleLogout = () => {
     logout(undefined, {
-      onSuccess: () => navigate('/login'),
+      onSuccess: () => navigate("/login"),
     });
   };
 
   return (
-    <div>
-      <div>dashboard (protected)</div>
-      <button onClick={handleLogout} className='bg-orange-600 rounded-md p-2 cursor-pointer mt-4'>
+    <div id="dashboard" className="flex h-full w-full">
+      <div className="bg-tertiary min-w-60">
+        <Sidebar />
+      </div>
+      <button onClick={handleLogout} className="mt-4 cursor-pointer rounded-md bg-orange-600 p-2">
         Logout
       </button>
       <WebSocketTest />
     </div>
   );
-}
+};
+
+export default Dashboard;
