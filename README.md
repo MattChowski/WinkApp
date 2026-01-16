@@ -1,87 +1,68 @@
-# Welcome to React Router!
+# Wink 💬
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A modern team communication platform for real-time messaging and collaboration.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## Overview
+
+Wink brings your team together with instant messaging, organized channels, and seamless conversations. Built for teams who value clear communication and a beautiful interface.
 
 ## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- **Real-time messaging** — Messages appear instantly across all connected clients
+- **Channels** — Organize conversations by topic, project, or team
+- **Rich text editor** — Format messages with style, not just plain text
+- **Emoji support** — Express yourself with a full library of emojis including custom ones
+- **User presence** — See who's online and available
+
+## Screenshots
+
+_Coming soon_
 
 ## Getting Started
 
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+
 ### Installation
 
-Install the dependencies:
-
 ```bash
+# Clone the repository
+git clone https://github.com/yourusername/circle-ui.git
+
+# Install dependencies
 npm install
-```
 
-### Development
-
-Start the development server with HMR:
-
-```bash
+# Start the development server
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+### Environment Variables
 
-## Building for Production
+Create a `.env` file in the root directory:
 
-Create a production build:
-
-```bash
-npm run build
+```env
+# Add your environment variables here
 ```
 
-## Deployment
+## Roadmap
 
-### Docker Deployment
+- [ ] Direct messages
+- [ ] File sharing
+- [ ] Message threads
+- [ ] Search functionality
+- [ ] Notifications
+- [ ] Mobile app
 
-To build and run using Docker:
+## Contributing
 
-```bash
-docker build -t my-app .
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
+## License
 
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+MIT
 
 ---
 
-Built with ❤️ using React Router.
+Made with ❤️

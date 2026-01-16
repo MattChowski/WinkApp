@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/users": {
+    "/api/users": {
         parameters: {
             query?: never;
             header?: never;
@@ -20,7 +20,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/{id}": {
+    "/api/users/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -36,7 +36,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/chat/health": {
+    "/api/chat/{channelId}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ChatController_getMessages"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/chat/health": {
         parameters: {
             query?: never;
             header?: never;
@@ -132,6 +148,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/channels/joined": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ChannelsController_findJoined"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/channels/{id}": {
         parameters: {
             query?: never;
@@ -152,6 +184,61 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        UserOrganizationDto: {
+            /** @example tz4a98xxat96iws9zmbrgj3a */
+            organizationId: string;
+            /**
+             * @example MEMBER
+             * @enum {string}
+             */
+            role: "OWNER" | "ADMIN" | "MEMBER";
+        };
+        UserDto: {
+            /** @example tz4a98xxat96iws9zmbrgj3a */
+            id: string;
+            /** @example user@example.com */
+            email: string;
+            /** @example John Doe */
+            name?: Record<string, never>;
+            organizations?: components["schemas"]["UserOrganizationDto"][];
+            /** @example tz4a98xxat96iws9zmbrgj3a */
+            activeOrgId?: string;
+        };
+        MessageAuthorDto: {
+            /** @example V1StGXR8_Z5j */
+            id: string;
+            /** @example John Doe */
+            name: string | null;
+        };
+        MessageDto: {
+            /** @example V1StGXR8_Z5j */
+            id: string;
+            /**
+             * @description TipTap JSON document
+             * @example {
+             *       "type": "doc",
+             *       "content": [
+             *         {
+             *           "type": "paragraph",
+             *           "content": [
+             *             {
+             *               "type": "text",
+             *               "text": "Hello everyone!"
+             *             }
+             *           ]
+             *         }
+             *       ]
+             *     }
+             */
+            json: Record<string, never>;
+            /** @example Hello everyone! */
+            content: string;
+            /** @example V1StGXR8_Z5j */
+            channelId: string;
+            author: components["schemas"]["MessageAuthorDto"];
+            /** Format: date-time */
+            createdAt: string;
+        };
         SigninDto: {
             /** @example user@example.com */
             email: string;
@@ -168,8 +255,8 @@ export interface components {
         };
         CreateChannelDto: Record<string, never>;
         ChannelDto: {
-            /** @example 1 */
-            id: number;
+            /** @example tz4a98xxat96iws9zmbrgj3a */
+            id: string;
             /** @example general */
             name?: string;
             /**
@@ -177,8 +264,8 @@ export interface components {
              * @enum {string}
              */
             type: "GROUP" | "DM" | "CHANNEL";
-            /** @example 1 */
-            organizationId: number;
+            /** @example tz4a98xxat96iws9zmbrgj3a */
+            organizationId: string;
             /** Format: date-time */
             createdAt: string;
             /** Format: date-time */
@@ -207,7 +294,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["UserDto"][];
+                };
             };
         };
     };
@@ -216,7 +305,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: string;
             };
             cookie?: never;
         };
@@ -226,7 +315,33 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["UserDto"];
+                };
+            };
+        };
+    };
+    ChatController_getMessages: {
+        parameters: {
+            query: {
+                limit: number;
+                cursor: string;
+            };
+            header?: never;
+            path: {
+                channelId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MessageDto"][];
+                };
             };
         };
     };
@@ -264,7 +379,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["UserDto"];
+                };
             };
         };
     };
@@ -281,11 +398,13 @@ export interface operations {
             };
         };
         responses: {
-            201: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["UserDto"];
+                };
             };
         };
     };
@@ -319,7 +438,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["UserDto"];
+                };
             };
         };
     };
@@ -361,6 +482,25 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ChannelDto"];
+                };
+            };
+        };
+    };
+    ChannelsController_findJoined: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChannelDto"][];
                 };
             };
         };

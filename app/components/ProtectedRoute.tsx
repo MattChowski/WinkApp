@@ -1,5 +1,5 @@
-import { Navigate, useLocation } from 'react-router';
-import { useSessionQuery } from '~/apiHooks/useSessionQuery';
+import { Navigate, useLocation } from "react-router";
+import { useSessionQuery } from "~/apiHooks/useSessionQuery";
 
 type ProtectedRouteProps = {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   if (!user) {
-    return <Navigate to='/login' replace state={{ from: location }} />;
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
   return children;

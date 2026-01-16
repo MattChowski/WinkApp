@@ -1,53 +1,52 @@
-import { Fieldset } from "@headlessui/react";
-import { KeyRound, Mail } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router";
-import { useLoginUserMutation } from "~/apiHooks/useLoginUserMutation";
-import { PrimaryButton } from "~/components/base/Buttons";
-import { InputComponent } from "~/components/base/InputComponent";
-import { LinkTo } from "~/components/base/Links";
-import { WebSocketTest } from "~/components/WebSocketTest";
+import { Fieldset } from '@headlessui/react'
+import { KeyRound, Mail } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router'
+import { useLoginUserMutation } from '~/apiHooks/useLoginUserMutation'
+import { PrimaryButton } from '~/components/base/Buttons'
+import { InputComponent } from '~/components/base/InputComponent'
+import { LinkTo } from '~/components/base/Links'
 
 export default function Login() {
-  const navigate = useNavigate();
-  const [error, setError] = useState(false);
-  const { isPending, mutate } = useLoginUserMutation();
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate()
+  const [error, setError] = useState(false)
+  const { isPending, mutate } = useLoginUserMutation()
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
 
     mutate(
       { email, password },
       {
-        onSuccess: () => {
-          navigate("/dashboard");
+        onSuccess: (data) => {
+          navigate(`/${data.activeOrgId}`)
         },
         onError: () => {
-          setError(true);
+          setError(true)
         },
       },
-    );
-  };
+    )
+  }
 
   const handleChange = () => {
-    if (error) setError(false);
-  };
+    if (error) setError(false)
+  }
 
   useEffect(() => {
-    if (inputRef.current) inputRef.current.style.background = "white";
-  }, []);
+    if (inputRef.current) inputRef.current.style.background = 'white'
+  }, [])
 
   return (
     <div className="h-full">
       <div className="mb-10">
-        <h1 className="text-tertiary mb-2 text-center text-4xl font-extrabold">
+        <h1 className="mb-2 text-center font-extrabold text-4xl text-tertiary">
           Sign in to <span className="text-primary">Wink</span>
         </h1>
-        <p className="text-tertiary/60 text-center">Enter your credentials to continue</p>
+        <p className="text-center text-tertiary/60">Enter your credentials to continue</p>
       </div>
       <form method="post" className="flex flex-col gap-4" onSubmit={handleLogin}>
         <Fieldset className="flex flex-col gap-4">
@@ -79,9 +78,9 @@ export default function Login() {
         </Fieldset>
         <PrimaryButton type="submit" label="Login" isLoading={isPending} className="shadow-primary/30 shadow-xl" />
       </form>
-      <p className="text-tertiary mt-8 text-center">
+      <p className="mt-8 text-center text-tertiary">
         New to Wink? <LinkTo to="/register">Create an account instead</LinkTo>.
       </p>
     </div>
-  );
+  )
 }

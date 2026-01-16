@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/complexity/noImportantStyles: Sometimes you gotta */
 @import "https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap";
 @import "tailwindcss";
 
@@ -12,8 +13,13 @@
   --color-primary-light: #e54890;
   --color-tertiary: var(--color-gray-700);
   --color-secondary: #36b0b8;
-  --color-tertiary: #051314;
+  --color-tertiary: #121819;
+  --color-chat-bg: #1a1c1d;
 }
+
+/* @layer base {
+  @apply relative;
+} */
 
 html,
 body {
@@ -37,4 +43,45 @@ input:-webkit-autofill {
   transition:
     background-color 5000s ease-in-out 0s,
     outline 0.2s ease-in-out !important;
+}
+
+.tiptap {
+  @apply break-all;
+}
+
+/* Tiptap placeholder */
+.tiptap p.is-editor-empty:first-child::before {
+  @apply pointer-events-none float-left h-0 text-white/40;
+  content: attr(data-placeholder);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-white/20;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-white/30;
+}
+
+/* Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+}
+
+span[data-type="emoji"] {
+  @apply inline-flex h-4 w-6 relative items-center justify-center align-middle -top-px;
+
+  img {
+    @apply absolute h-6 w-6 top-1/2 -translate-y-1/2;
+  }
 }
