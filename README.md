@@ -55,13 +55,9 @@ Create a `.env` file in the root directory:
 - [ ] Notifications
 - [ ] Mobile app
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
 ## License
 
-MIT
+This project is private and unlicensed
 
 ---
 
