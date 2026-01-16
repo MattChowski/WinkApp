@@ -1,4 +1,4 @@
-# Wink 💬
+# Wink (previously Circle)
 
 A modern team communication platform for real-time messaging and collaboration.
 
